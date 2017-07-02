@@ -1,5 +1,7 @@
 # nginx_compile_and_install
 
+builds and installs nginx; also removes the 'Server'-Tag
+
 prereqs:
 up and running nginx (e.g. sudo dnf install nginx)
 
