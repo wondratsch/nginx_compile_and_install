@@ -1,8 +1,22 @@
 #!/bin/sh
 
 if [ -z "$*" ]; then
-    echo "no args"
+    echo "Syntax: ./nginx_build.sh VERSION (optional: SERVERNAME)"
+    echo "exit..."
     exit
+fi
+
+if [ -z "$(pgrep nginx)" ]; then
+    echo "Nginx is not running"
+    echo "exit..."
+    exit
+fi
+
+if [ -z "$2" ]
+    then
+        server_name="nothing to see here, move along!"
+    else
+        server_name=$2
 fi
 
 inst_dir="/tmp/nginx"
@@ -39,11 +53,12 @@ echo -e "***********************************************************************
 
 echo -e "\n***************************************************************************"
 echo "search and replace serverinfo"
-sed -i 's/"Server: nginx" CRLF/"Server: nothing to see here, move along!" CRLF/g' nginx-"$version"/src/http/ngx_http_header_filter_module.c
-sed -i 's/"Server: " NGINX_VER CRLF/"Server: nothing to see here, move along!" CRLF/g' nginx-"$version"/src/http/ngx_http_header_filter_module.c
-sed -i 's/"Server: " NGINX_VER_BUILD CRLF/"Server: nothing to see here, move along!" CRLF/g' nginx-"$version"/src/http/ngx_http_header_filter_module.c
+sed -i 's/"Server: nginx" CRLF/"Server: '"$server_name"'" CRLF/g' nginx-"$version"/src/http/ngx_http_header_filter_module.c
+sed -i 's/"Server: " NGINX_VER CRLF/"Server: '"$server_name"'" CRLF/g' nginx-"$version"/src/http/ngx_http_header_filter_module.c
+sed -i 's/"Server: " NGINX_VER_BUILD CRLF/"Server: '"$server_name"'" CRLF/g' nginx-"$version"/src/http/ngx_http_header_filter_module.c
 echo "DONE!"
 echo -e "***************************************************************************\n"
+exit
 
 echo -e "\n***************************************************************************"
 echo ".configure"
