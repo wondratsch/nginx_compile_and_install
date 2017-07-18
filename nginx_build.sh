@@ -58,7 +58,6 @@ sed -i 's/"Server: " NGINX_VER CRLF/"Server: '"$server_name"'" CRLF/g' nginx-"$v
 sed -i 's/"Server: " NGINX_VER_BUILD CRLF/"Server: '"$server_name"'" CRLF/g' nginx-"$version"/src/http/ngx_http_header_filter_module.c
 echo "DONE!"
 echo -e "***************************************************************************\n"
-exit
 
 echo -e "\n***************************************************************************"
 echo ".configure"
