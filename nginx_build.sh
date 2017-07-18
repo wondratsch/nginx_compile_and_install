@@ -21,6 +21,7 @@ fi
 
 inst_dir="/tmp/nginx"
 help_file="help_file.sh"
+timestamp=`date +%Y%m%d%H%M%S`
 version=$1
 attr=`nginx -V 2>&1 | grep 'configure arguments' | cut -d " " -f3-`
 
@@ -92,7 +93,7 @@ echo ".configure"
 cd nginx-"$version"
 chmod 700 ../$help_file 
 ../$help_file
-mv ../$help_file ../$help_file.$version
+mv ../$help_file ../$help_file.$version.$timestamp
 echo "DONE!"
 echo -e "***************************************************************************\n"
 
