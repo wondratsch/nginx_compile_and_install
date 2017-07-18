@@ -29,6 +29,17 @@ echo "cd/mkdir $inst_dir"
 if [ ! -d $inst_dir ]; then
     mkdir $inst_dir
 fi
+
+if [ ! -r $inst_dir ]; then
+    echo "$inst_dir is not readable for $USER"
+    echo "Changing Ownership to user $USER"
+    read -p "Continue? [y/n]" choice
+    case "$choice" in
+        y|Y ) echo "chown $USER $inst_dir"; sudo chown $USER $inst_dir;;
+        n|N ) echo "please fix permissions for $inst_dir manually"; exit;;
+        * ) echo "invalid answer; exit."; exit;;
+    esac
+fi
 cd $inst_dir
 echo "DONE!"
 echo -e "***************************************************************************\n"
@@ -36,10 +47,22 @@ echo -e "***********************************************************************
 echo -e "\n***************************************************************************"
 if [ ! -r nginx-"$version".tar.gz ]
     then
-        echo "wget nginx Version $version"
-        wget https://nginx.org/download/nginx-"$version".tar.gz
+        if [ ! -f nginx-"$version".tar.gz ]
+            then
+                echo "wget nginx $version"
+                #wget https://nginx.org/download/nginx-"$version".tar.gz
+            else
+                echo "nginx-"$version".tar.gz in $inst_dir is not readable for $USER"
+                echo "Removing file and reload it from nginx.org"
+                read -p "Continue? [y/n]" choice
+                case "$choice" in
+                    y|Y ) echo "rm nginx-"$version".tar.gz && wget nginx $version"; sudo rm nginx-"$version".tar.gz && wget https://nginx.org/download/nginx-"$version".tar.gz;;
+                    n|N ) echo "please fix permissions for nginx-"$version".tar.gz manually"; exit;;
+                    * ) echo "invalid answer; exit."; exit;;
+                esac
+        fi
     else
-        echo "$version.tar.gz exists and has read permission"
+        echo "nginx-$version.tar.gz exists and has read permission"
 fi
 echo "DONE!"
 echo -e "***************************************************************************\n"
