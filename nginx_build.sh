@@ -52,6 +52,10 @@ if [ ! -r nginx-"$version".tar.gz ]
             then
                 echo "wget nginx $version"
                 wget https://nginx.org/download/nginx-"$version".tar.gz
+                if [ ! $? -eq 0 ]; then
+                    echo "something with wget went wrong; exit."
+                    exit
+                fi
             else
                 echo "nginx-"$version".tar.gz in $inst_dir is not readable for $USER"
                 echo "Removing file and reload it from nginx.org"
