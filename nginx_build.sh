@@ -34,12 +34,6 @@ echo "DONE!"
 echo -e "***************************************************************************\n"
 
 echo -e "\n***************************************************************************"
-echo "create helpfile"
-echo "./configure $attr" > $inst_dir/$help_file
-echo "DONE!"
-echo -e "***************************************************************************\n"
-
-echo -e "\n***************************************************************************"
 if [ ! -r nginx-"$version".tar.gz ]
     then
         echo "wget nginx Version $version"
@@ -61,6 +55,12 @@ echo "search and replace serverinfo"
 sed -i 's/"Server: nginx" CRLF/"Server: '"$server_name"'" CRLF/g' nginx-"$version"/src/http/ngx_http_header_filter_module.c
 sed -i 's/"Server: " NGINX_VER CRLF/"Server: '"$server_name"'" CRLF/g' nginx-"$version"/src/http/ngx_http_header_filter_module.c
 sed -i 's/"Server: " NGINX_VER_BUILD CRLF/"Server: '"$server_name"'" CRLF/g' nginx-"$version"/src/http/ngx_http_header_filter_module.c
+echo "DONE!"
+echo -e "***************************************************************************\n"
+
+echo -e "\n***************************************************************************"
+echo "create helpfile"
+echo "./configure $attr" > $inst_dir/$help_file
 echo "DONE!"
 echo -e "***************************************************************************\n"
 
