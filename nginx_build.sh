@@ -26,8 +26,8 @@ version=$1
 attr=`nginx -V 2>&1 | grep 'configure arguments' | cut -d " " -f3-`
 
 echo -e "\n***************************************************************************"
-echo "cd/mkdir $inst_dir"
 if [ ! -d $inst_dir ]; then
+    echo "mkdir $inst_dir"
     mkdir $inst_dir
 fi
 
@@ -51,7 +51,7 @@ if [ ! -r nginx-"$version".tar.gz ]
         if [ ! -f nginx-"$version".tar.gz ]
             then
                 echo "wget nginx $version"
-                #wget https://nginx.org/download/nginx-"$version".tar.gz
+                wget https://nginx.org/download/nginx-"$version".tar.gz
             else
                 echo "nginx-"$version".tar.gz in $inst_dir is not readable for $USER"
                 echo "Removing file and reload it from nginx.org"
