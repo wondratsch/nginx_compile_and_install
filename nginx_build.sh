@@ -40,8 +40,13 @@ echo "DONE!"
 echo -e "***************************************************************************\n"
 
 echo -e "\n***************************************************************************"
-echo "wget nginx Version $version"
-wget https://nginx.org/download/nginx-"$version".tar.gz
+if [ ! -r nginx-"$version".tar.gz ]
+    then
+        echo "wget nginx Version $version"
+        wget https://nginx.org/download/nginx-"$version".tar.gz
+    else
+        echo "$version.tar.gz exists and has read permission"
+fi
 echo "DONE!"
 echo -e "***************************************************************************\n"
 
